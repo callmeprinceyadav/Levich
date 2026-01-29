@@ -1,0 +1,22 @@
+{
+  "name": "levich-bidding",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-time live bidding auction platform",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm run dev --workspace=@levich/server",
+    "dev:client": "npm run dev --workspace=@levich/client",
+    "build": "npm run build --workspaces",
+    "start": "npm run start --workspace=@levich/server"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
