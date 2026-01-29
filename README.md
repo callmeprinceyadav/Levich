@@ -140,6 +140,3 @@ This prevents client-side timer manipulation.
 - **Frontend**: React 18, Vite, Framer Motion, Socket.io-client
 - **Infrastructure**: Docker, nginx
 
-## License
-
-MIT
