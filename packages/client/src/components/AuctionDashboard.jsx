@@ -9,10 +9,13 @@ function AuctionDashboard({ userId, timeOffset }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // API base URL - use env var in production, relative path in dev
+    const API_URL = import.meta.env.VITE_API_URL || '';
+
     // fetch initial items
     const fetchItems = useCallback(async () => {
         try {
-            const response = await fetch('/api/items');
+            const response = await fetch(`${API_URL}/api/items`);
             const data = await response.json();
 
             if (data.success) {
@@ -26,7 +29,7 @@ function AuctionDashboard({ userId, timeOffset }) {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [API_URL]);
 
     useEffect(() => {
         fetchItems();
