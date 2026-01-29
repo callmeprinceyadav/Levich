@@ -1,4 +1,30 @@
-function Header({ isConnected, userId }) {
+import { useState } from 'react';
+
+function Header({ isConnected, userId, onReset }) {
+    const [resetting, setResetting] = useState(false);
+
+    const handleReset = async () => {
+        if (resetting) return;
+
+        setResetting(true);
+        try {
+            const API_URL = import.meta.env.VITE_API_URL || '';
+            const response = await fetch(`${API_URL}/api/reset`, {
+                method: 'POST'
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                // Trigger parent to refetch items
+                onReset?.();
+            }
+        } catch (err) {
+            console.error('Reset failed:', err);
+        } finally {
+            setResetting(false);
+        }
+    };
+
     return (
         <header className="header">
             <div className="header-content">
@@ -8,6 +34,14 @@ function Header({ isConnected, userId }) {
                 </div>
 
                 <div className="header-info">
+                    <button
+                        className={`reset-button ${resetting ? 'loading' : ''}`}
+                        onClick={handleReset}
+                        disabled={resetting}
+                    >
+                        {resetting ? '🔄 Resetting...' : '🔄 Reset Auctions'}
+                    </button>
+
                     <div className={`connection-status ${isConnected ? 'connected' : 'disconnected'}`}>
                         <span className="status-dot"></span>
                         <span className="status-text">{isConnected ? 'Live' : 'Connecting...'}</span>
@@ -24,3 +58,4 @@ function Header({ isConnected, userId }) {
 }
 
 export default Header;
+

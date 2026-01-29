@@ -3,7 +3,7 @@
  */
 
 import { Router } from 'express';
-import { getAllItems, getItemById } from '../store/auctionStore.js';
+import { getAllItems, getItemById, resetItems } from '../store/auctionStore.js';
 import { getServerTime } from '../utils/timeSync.js';
 
 const router = Router();
@@ -49,6 +49,29 @@ router.get('/items/:id', (req, res) => {
         res.status(500).json({
             success: false,
             error: 'Failed to fetch item'
+        });
+    }
+});
+
+// POST /api/reset - restart all auctions with fresh timers
+router.post('/reset', (req, res) => {
+    try {
+        resetItems();
+        const items = getAllItems();
+
+        console.log('🔄 All auctions have been reset!');
+
+        res.json({
+            success: true,
+            message: 'All auctions have been reset!',
+            serverTime: getServerTime(),
+            items
+        });
+    } catch (err) {
+        console.error('Error resetting items:', err);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to reset auctions'
         });
     }
 });

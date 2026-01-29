@@ -169,6 +169,34 @@ body {
   color: var(--accent-primary);
 }
 
+/* Reset Button */
+.reset-button {
+  padding: var(--space-xs) var(--space-md);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reset-button:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.reset-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.reset-button.loading {
+  animation: pulse 1s infinite;
+}
+
 /* === Dashboard === */
 .dashboard {
   padding: var(--space-lg) 0;
